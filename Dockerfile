@@ -1,3 +1,6 @@
-FROM alpine:latest
-RUN apk --no-cache add --update ca-certificates openssl wget && update-ca-certificates
-RUN wget -m -e robots=off https://pypi.org/simple
+FROM pypa/bandersnatch as download
+ADD ./bandersnatch.conf /etc/bandersnatch.conf
+RUN bandersnatch mirror
+
+FROM nginx:alpine
+COPY --from=download /srv/pypi/web /usr/share/nginx/html
