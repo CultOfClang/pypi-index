@@ -32,7 +32,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
       
       - name: Run Bandersnatch
-        run: docker run -v $SRV_PYPI:/srv/pypi -v $PWD/bandersnatch.conf:/conf/bandersnatch.conf pypa/bandersnatch
+        run: docker run -v $SRV_PYPI:/srv/pypi -v $PWD/bandersnatch.conf:/conf/bandersnatch.conf pypa/bandersnatch bandersnatch mirror
 
       - name: Build image
         run: docker build . --file Dockerfile --tag $IMAGE_NAME
