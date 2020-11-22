@@ -13,7 +13,6 @@ on:
 env:
   # TODO: Change variable to your image's name.
   IMAGE_NAME: image
-  SRV_PYPI: /srv/pypi
 
 jobs:
   # Push image to GitHub Packages.
@@ -25,7 +24,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: make pypi dir
-        run: mkdir -p $SRV_PYPI
+        run: export SRV_PYPI=$PWD/srv/pypi && mkdir -p $SRV_PYPI
       - uses: actions/cache@v2
         id: cache
         with:
