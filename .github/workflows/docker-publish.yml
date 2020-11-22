@@ -2,7 +2,7 @@ name: Docker
 
 on:
   schedule:
-    - cron: "*/2 * * * *"
+    - cron: "12 3 * * *"
   push:
     # Publish `v1.2.3` tags as releases.
     branches:
