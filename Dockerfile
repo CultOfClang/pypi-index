@@ -1,6 +1,3 @@
-FROM pypa/bandersnatch as download
-ADD ./bandersnatch.conf /etc/bandersnatch.conf
-RUN bandersnatch mirror
-
 FROM nginx:alpine
-COPY --from=download /srv/pypi/web /usr/share/nginx/html
+ARG SRV_PYPI=./srv/pypi
+COPY ${SRV_PYPI}/web /usr/share/nginx/html
