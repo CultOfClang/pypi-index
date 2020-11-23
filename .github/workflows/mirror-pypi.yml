@@ -24,7 +24,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: make pypi dir
-        run: export SRV_PYPI=$PWD/srv/pypi && mkdir -p $SRV_PYPI
+        run: export SRV_PYPI=./srv/pypi && mkdir -p $SRV_PYPI
       - uses: actions/cache@v2
         id: cache
         with:
@@ -35,7 +35,7 @@ jobs:
         run: docker run -v $SRV_PYPI:/srv/pypi -v $PWD/bandersnatch.conf:/etc/bandersnatch.conf pypa/bandersnatch bandersnatch sync bandersnatch
 
       - name: Build image
-        run: docker build . --file Dockerfile --build-arg SRV_PYPI=${SRV_PYPI} --tag $IMAGE_NAME
+        run: docker build . --file Dockerfile --tag $IMAGE_NAME
 
       - name: Log into registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
