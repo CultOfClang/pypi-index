@@ -30,11 +30,10 @@ jobs:
           path: $SRV_PYPI
           key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
       
-      - name: Run Bandersnatch
-        run: docker run -v $SRV_PYPI:/srv/pypi -v $PWD/bandersnatch.conf:/etc/bandersnatch.conf pypa/bandersnatch bandersnatch sync bandersnatch
-
-      - name: Build image
-        run: docker build . --file Dockerfile --tag $IMAGE_NAME
+      - name: Run Bandersnatch + build image
+        run: |
+          docker run -v $SRV_PYPI:/srv/pypi -v $PWD/bandersnatch.conf:/etc/bandersnatch.conf pypa/bandersnatch bandersnatch sync bandersnatch
+          docker build . --file Dockerfile --tag $IMAGE_NAME
 
       - name: Log into registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
