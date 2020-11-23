@@ -32,9 +32,10 @@ jobs:
       
       - name: Run Bandersnatch + build image
         run: |
-          echo $SRV_PYPI
+          echo "$PWD/srv/pypi is real"
           ls -R $SRV_PYPI
           docker run -v $SRV_PYPI:/srv/pypi -v $PWD/bandersnatch.conf:/etc/bandersnatch.conf pypa/bandersnatch bandersnatch sync bandersnatch
+          ls -R $SRV_PYPI
           docker build . --file Dockerfile --tag $IMAGE_NAME
 
       - name: Log into registry
