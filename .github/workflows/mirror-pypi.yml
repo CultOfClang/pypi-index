@@ -32,6 +32,8 @@ jobs:
       
       - name: Run Bandersnatch + build image
         run: |
+          echo $SRV_PYPI
+          ls -R $SRV_PYPI
           docker run -v $SRV_PYPI:/srv/pypi -v $PWD/bandersnatch.conf:/etc/bandersnatch.conf pypa/bandersnatch bandersnatch sync bandersnatch
           docker build . --file Dockerfile --tag $IMAGE_NAME
 
