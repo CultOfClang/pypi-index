@@ -1,5 +1,8 @@
-FROM arongizra/wget2-alpine as download
-RUN wget2 -r pypi.org/simple/
+FROM pypa/bandersnatch as download
+ADD ./bandersnatch.conf /etc/bandersnatch.conf
+RUN bandersnatch mirror
 
 FROM nginx:alpine
-COPY --from=download /pypi.org /usr/share/nginx/html
+FROM nginx:alpine
+ADD srv/pypi/web /usr/share/nginx/html
+COPY --from=download /srv/pypi/web /usr/share/nginx/html 
